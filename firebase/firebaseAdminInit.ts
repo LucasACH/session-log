@@ -1,0 +1,26 @@
+import admin, { ServiceAccount } from "firebase-admin";
+
+const firebaseAdminConfig: object | ServiceAccount = {
+  type: process.env.NEXT_PUBLIC_ADMIN_TYPE,
+  project_id: process.env.NEXT_PUBLIC_FIREBASE_PROJECTID,
+  private_key_id: process.env.NEXT_PUBLIC_ADMIN_PRIVATE_KEY_ID,
+  private_key: process.env.NEXT_PUBLIC_ADMIN_PRIVATE_KEY,
+  client_email: process.env.NEXT_PUBLIC_ADMIN_CLIENT_EMAIL,
+  client_id: process.env.NEXT_PUBLIC_ADMIN_CLIENT_ID,
+  auth_uri: process.env.NEXT_PUBLIC_ADMIN_AUTH_URI,
+  token_uri: process.env.NEXT_PUBLIC_ADMIN_TOKEN_URI,
+  auth_provider_x509_cert_url:
+    process.env.NEXT_PUBLIC_ADMIN_AUTH_PROVIDER_X509_CERT_URL,
+  client_x509_cert_url: process.env.NEXT_PUBLIC_ADMIN_CLIENT_X509_CERT_URL,
+};
+
+const initFirebaseAdmin = () => {
+  if (!admin.apps.length) {
+    admin.initializeApp({
+      credential: admin.credential.cert(firebaseAdminConfig),
+    });
+  }
+  return admin;
+};
+
+export default initFirebaseAdmin;
